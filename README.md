@@ -22,7 +22,7 @@
 			sphere = 4,		// 구체(원)
 			plane,			// 평면
 			cylinder,		// 원기둥
-			con,			// 원뿔
+			cone,			// 원뿔
 			hyperboloid,		// 쌍곡선
 			paraboloid		// 포물선
 		}	t_shape;

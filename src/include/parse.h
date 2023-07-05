@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jhwang2 <jhwang2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 21:14:41 by jeelee            #+#    #+#             */
-/*   Updated: 2023/06/09 01:53:43 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/06/13 19:47:55 by jhwang2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,19 @@ typedef struct s_buffer
 	size_t	idx;
 }	t_buffer;
 
-int		vaild_file(int ac, char **av);
+int		valid_file(int ac, char **av);
 
-void	setting_bg(int type, char *line, t_data *data);
+void	setting_bg(int type, char *line, t_data *data, int *parsed);
 void	setting_object(int type, char *line, t_data *data);
 
 t_light	**create_llist(int n);
 void	add_llist(t_light *l, t_light ***llist);
 
+int		parse_ratio(char *line, double *ratio);
 int		parse_color(char *line, uint32_t *color);
 int		parse_coordi(char *line, t_point *coodi);
-int		parse_decimal(char *line, float *decimal);
+int		parse_n_vector(char *line, t_point *coodi);
+int		parse_decimal(char *line, double *decimal);
 int		parse_integer(char *line, int *integer);
 
 int		parse_atoi(char *str, size_t size);

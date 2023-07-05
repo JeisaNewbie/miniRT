@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_print.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jhwang2 <jhwang2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 21:15:44 by jeelee            #+#    #+#             */
-/*   Updated: 2023/06/09 01:59:09 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/06/13 19:49:25 by jhwang2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	print_data(t_data *data)
 	printf("------------------------------------[data]------------------------------------\n");
 	printf("Ambient\t\t| ratio: [ %f ], color: [ %d ]\n", data->a_light.light_ratio, data->a_light.color);
 	printf("camera\t\t| point: ");
-	print_point(&(data->camera.point));
+	print_point(&(data->camera.center));
 	printf(", n_vector: ");
 	print_point(&(data->camera.n_vector));
 	printf(", FOV: %d\n", data->camera.fov);

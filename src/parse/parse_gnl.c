@@ -6,11 +6,24 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 12:21:14 by jeelee            #+#    #+#             */
-/*   Updated: 2023/06/07 23:45:50 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/06/11 17:12:39 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minirt.h"
+
+static size_t	get_size_line(t_buffer *bf)
+{
+	size_t	size;
+
+	size = 0;
+	while (bf->idx + size < (size_t)bf->rd_size && \
+							(bf->buffer)[bf->idx + size] != '\n')
+		size++;
+	if ((bf->buffer)[bf->idx + size] == '\n')
+		size++;
+	return (size);
+}
 
 static void	_joining(char **line, t_buffer *bf)
 {
@@ -23,10 +36,7 @@ static void	_joining(char **line, t_buffer *bf)
 		line_size = ft_strlen(*line);
 	else
 		line_size = 0;
-	size = 0;
-	while (bf->idx + size < (size_t)bf->rd_size && \
-							(bf->buffer)[bf->idx + size] != '\n')
-		size++;
+	size = get_size_line(bf);
 	new_line = (char *)malloc(sizeof(char) * (line_size + size + 1));
 	if (!new_line)
 		parse_perror_exit(1);
@@ -57,11 +67,9 @@ char	*parse_gnl(int fd, t_buffer *bf)
 				break ;
 		}
 		_joining(&line, bf);
-		if ((bf->buffer)[bf->idx] == '\n' || \
+		if ((bf->buffer)[bf->idx - 1] == '\n' || \
 			bf->rd_size < BUFFER_SIZE)
 			break ;
 	}
-	if ((bf->buffer)[bf->idx] == '\n')
-		(bf->idx)++;
 	return (line);
 }

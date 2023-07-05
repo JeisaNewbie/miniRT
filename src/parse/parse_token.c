@@ -6,37 +6,20 @@
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:27:44 by jeelee            #+#    #+#             */
-/*   Updated: 2023/06/07 23:18:48 by jeelee           ###   ########.fr       */
+/*   Updated: 2023/06/27 15:27:57 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minirt.h"
 
-int	parse_integer(char *line, int *integer)
+int	parse_ratio(char *line, double *ratio)
 {
 	size_t	idx;
-	size_t	size;
 
 	idx = 0;
-	while (line[idx] == ' ')
-		idx++;
-	size = catchs_in_str(line + idx, " ");
-	*integer = parse_atoi(line + idx, size);
-	idx += size;
-	return (idx);
-}
-
-int	parse_decimal(char *line, float *decimal)
-{
-	size_t	idx;
-	size_t	size;
-
-	idx = 0;
-	while (line[idx] == ' ')
-		idx++;
-	size = catchs_in_str(line + idx, " ");
-	*decimal = parse_atof(line + idx, size);
-	idx += size;
+	idx = parse_decimal(line, ratio);
+	if (!(0.0 <= *ratio && *ratio <= 1.0))
+		parse_error_exit("Ratio in range: [0.0, 1.0].", 1);
 	return (idx);
 }
 
@@ -57,7 +40,8 @@ int	parse_color(char *line, uint32_t *color)
 		tmp = parse_atoi(line + idx, size);
 		if (!(0 <= tmp && tmp <= 255))
 			parse_error_exit("Invalid color.", 1);
-		idx++;
+		if (line[idx + size] == ',')
+			idx++;
 		*color |= (tmp << (8 * (3 - i)));
 		idx += size;
 	}
@@ -87,5 +71,21 @@ int	parse_coordi(char *line, t_point *coodi)
 	size = catchs_in_str(line + idx, ", ");
 	coodi->z = parse_atof(line + idx, size);
 	idx += size;
+	return (idx);
+}
+
+int	parse_n_vector(char *line, t_point *coodi)
+{
+	size_t	idx;
+
+	idx = parse_coordi(line, coodi);
+	if (!(-1.0 <= coodi->x && coodi->x <= 1.0) || \
+		!(-1.0 <= coodi->y && coodi->y <= 1.0) || \
+		!(-1.0 <= coodi->z && coodi->z <= 1.0))
+		parse_error_exit("Normal Vector In range [-1,1].", 1);
+	else if (coodi->x == 0.0 && \
+		coodi->y == 0.0 && coodi->z == 0.0)
+		parse_error_exit("Normal vector has no direction.", 1);
+	*coodi = v_unit(*coodi);
 	return (idx);
 }

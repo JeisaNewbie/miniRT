@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+         #
+#    By: ahkiler <ahkiler@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/17 17:14:39 by jeelee            #+#    #+#              #
-#    Updated: 2023/04/30 17:55:06 by jeelee           ###   ########.fr        #
+#    Updated: 2023/06/07 17:13:30 by ahkiler          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,8 +46,8 @@ $(NAME)	: $(OBJECTS)
 bonus	:
 		@make WITH_BONUS=1 all
 
-.o		: .c
-		$(CC) $(CFLAG) -c $< -o $@
+%.o		: %.c
+		@$(CC) $(CFLAG) -c $< -o $@
 
 clean	:
 	@rm -f $(OBJ) $(BONUS_OBJ)

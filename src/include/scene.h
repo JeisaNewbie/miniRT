@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   scene.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jhwang2 <jhwang2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/06 19:50:25 by jeelee            #+#    #+#             */
-/*   Updated: 2023/06/15 10:50:12 by jhwang2          ###   ########.fr       */
+/*   Created: 2023/06/11 14:19:46 by jhwang2           #+#    #+#             */
+/*   Updated: 2023/06/28 23:47:12 by jhwang2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
-
+#ifndef SCENE_H
+# define SCENE_H
 # include "./types.h"
-# include "./parse.h"
-# include "./v_utils.h"
-# include "./scene.h"
-# include "./ray.h"
 
-# define WINDOW_X 1920;
-# define WINDOW_Y 1080;
-
-int	parse_file(int ac, char **av, t_data *data);
+void		init_origin_point(t_ray *ray, t_point center);
+void		init_dir(t_camera *cam, double u, double v);
+void		set_cposition(t_data *data, double ratio);
+void		init_screen(t_camera *camera, t_point u, t_point v, t_point w);
 
 #endif

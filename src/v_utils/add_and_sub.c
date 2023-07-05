@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   add_and_sub.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahkiler <ahkiler@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jhwang2 <jhwang2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 13:40:41 by ahkiler           #+#    #+#             */
-/*   Updated: 2023/06/09 13:55:04 by ahkiler          ###   ########.fr       */
+/*   Updated: 2023/06/12 16:33:12 by jhwang2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minirt.h"
+
+t_point	set_vec(double x, double y, double z)
+{
+	t_point	vec;
+
+	vec.x = x;
+	vec.y = y;
+	vec.z = z;
+	return (vec);
+}
 
 t_point	v_add_vec (t_point vec_origin, t_point vec_value)
 {

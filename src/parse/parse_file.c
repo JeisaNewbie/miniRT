@@ -3,18 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahkiler <ahkiler@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 22:58:14 by jeelee            #+#    #+#             */
-/*   Updated: 2023/06/09 12:28:05 by ahkiler          ###   ########.fr       */
+/*   Updated: 2023/06/27 16:01:51 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minirt.h"
 
+static int	valid_line(char **line, size_t *idx)
+{
+	*idx = 0;
+	if (!(*line))
+		return (1);
+	while ((*line)[*idx] == ' ')
+		(*idx)++;
+	if (!((*line)[*idx]))
+	{
+		free(*line);
+		return (1);
+	}
+	if ((*line)[*idx] == '\n')
+	{
+		free(*line);
+		*line = 0;
+	}
+	return (0);
+}
+
 static int	is_type(char *line, size_t *i)
 {
-	const char	*types[6] = {"A", "C", "L", "sp", "pl", "cy"};
+	const char	*types[7] = {"A", "C", "L", "sp", "pl", "cy", "co"};
 	size_t		type_idx;
 	size_t		size;
 
@@ -24,7 +44,7 @@ static int	is_type(char *line, size_t *i)
 	if (size == 0 || size > 2)
 		return (0);
 	type_idx = -1;
-	while (++type_idx < 6)
+	while (++type_idx < 7)
 	{
 		if (!ft_strncmp(line + *i, types[type_idx], size))
 		{
@@ -36,7 +56,7 @@ static int	is_type(char *line, size_t *i)
 	return (0);
 }
 
-static void	parse_line(char *line, t_data *data)
+static void	parse_line(char *line, t_data *data, int *parsed)
 {
 	size_t	i;
 	int		type;
@@ -46,38 +66,44 @@ static void	parse_line(char *line, t_data *data)
 		i++;
 	type = is_type(line, &i);
 	if (type == 0)
-		parse_error_exit("Invalid file", 1);
+		parse_error_exit("Invalid identifier.", 1);
 	else if (type < 3)
-		setting_bg(type, line + i, data);
+		setting_bg(type, line + i, data, parsed);
 	else
 		setting_object(type, line + i, data);
 }
 
 static void	_parsing(int fd, t_data *data)
 {
+	int			parsed[2];
 	char		*line;
+	size_t		idx;
 	t_buffer	bf;
 
+	idx = 0;
+	parsed[0] = 0;
+	parsed[1] = 0;
 	ft_memset(&bf, 0, sizeof(t_buffer));
 	while (1)
 	{
 		line = parse_gnl(fd, &bf);
-		if (!line || !line[0])
-		{
-			if (line)
-				free(line);
+		if (valid_line(&line, &idx))
 			break ;
+		if (line)
+		{
+			parse_line(line + idx, data, parsed);
+			free(line);
 		}
-		parse_line(line, data);
-		free(line);
 	}
+	if (!parsed[0] || !parsed[1])
+		parse_error_exit("[Ambient, Camera] must exist.", 1);
 }
 
 int	parse_file(int ac, char **av, t_data *data)
 {
 	int	fd;
 
-	if (vaild_file(ac, av))
+	if (valid_file(ac, av))
 		return (1);
 	ft_memset(data, 0, sizeof(t_data));
 	fd = open(av[1], O_RDONLY);

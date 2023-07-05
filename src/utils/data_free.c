@@ -1,34 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_perror.c                                     :+:      :+:    :+:   */
+/*   data_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/06 21:22:57 by jeelee            #+#    #+#             */
-/*   Updated: 2023/06/11 02:15:04 by jeelee           ###   ########.fr       */
+/*   Created: 2023/06/11 01:56:04 by jeelee            #+#    #+#             */
+/*   Updated: 2023/06/11 02:04:02 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minirt.h"
 
-void	parse_perror_exit(int _exitcode)
+static void	free_lights(t_light **lights)
 {
-	perror(ANSI_BOL ANSI_BLU "miniRT: " ANSI_RES ANSI_RED);
-	printf(ANSI_RES);
-	exit(_exitcode);
+	size_t	idx;
+
+	idx = 0;
+	while (lights[idx])
+	{
+		free(lights[idx]);
+		idx++;
+	}
+	free(lights);
 }
 
-void	parse_error_exit(char *msg, int _exitcode)
+static void	free_objects(t_object **objects)
 {
-	printf(ANSI_BOL ANSI_BLU "miniRT: " ANSI_RES);
-	printf(ANSI_RED "%s" ANSI_RES "\n", msg);
-	exit(_exitcode);
+	size_t	idx;
+
+	idx = 0;
+	while (objects[idx])
+	{
+		free(objects[idx]);
+		idx++;
+	}
+	free(objects);
 }
 
-int	parse_error(char *msg, int _ret)
+void	free_data(t_data *data)
 {
-	printf(ANSI_BOL ANSI_BLU "miniRT: " ANSI_RES);
-	printf(ANSI_RED "%s" ANSI_RES "\n", msg);
-	return (_ret);
+	if (data)
+	{
+		if (data->lights)
+			free_lights(data->lights);
+		if (data->objects)
+			free_objects(data->objects);
+	}
 }
