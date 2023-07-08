@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhwang2 <jhwang2@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:14:24 by jhwang2           #+#    #+#             */
-/*   Updated: 2023/07/02 21:15:59 by jhwang2          ###   ########.fr       */
+/*   Updated: 2023/07/05 20:43:16 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	init_screen(t_camera *camera, t_point u, t_point v, t_point w)
 	double	h;
 
 	init_origin_point (&camera->ray, camera->center);
-	h = tan ((camera->fov / 2) * PI / 180) * v_length (camera->n_vector);
-	camera->view_port_w = 2.0 * h;
+	h = tan ((camera->fov / 2) * PI / 180);
+	camera->view_port_w = FOCAL_LENGTH * h;
 	camera->view_port_h = camera->view_port_w / camera->ratio;
 	camera->horizontal = v_mul_val (u, camera->view_port_w);
 	camera->vertical = v_mul_val (v, camera->view_port_h);

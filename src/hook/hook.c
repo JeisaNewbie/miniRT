@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hook.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhwang2 <jhwang2@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: jhwang2 <jhwang2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 17:45:57 by ahkiler           #+#    #+#             */
-/*   Updated: 2023/06/28 13:23:52 by jhwang2          ###   ########.fr       */
+/*   Updated: 2023/07/06 18:50:26 by jhwang2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	key_hook(int keycode, t_data *data)
 		data->camera.center.x += 5;
 	if (keycode == LEFT)
 		data->camera.center.x -= 5;
-	print_img (data);
+	// print_img (data);
 	return (0);
 }
 

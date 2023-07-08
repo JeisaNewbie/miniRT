@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hit_circle.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhwang2 <jhwang2@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:58:16 by jeelee            #+#    #+#             */
-/*   Updated: 2023/06/29 18:21:47 by jhwang2          ###   ########.fr       */
+/*   Updated: 2023/07/05 17:28:18 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,31 @@ static int	_hit_circle(t_point h, t_ray *ray, t_object *obj)
 	return (t);
 }
 
-static int	parse_value(double c_value, double value[])
+static int	parse_value(double c_value, double value[], t_rec *rec)
 {
 	if (c_value < 0)
 		return (0);
-	else if (value[0] < 0)
-	{
-		value[0] = c_value;
-		return (1);
-	}
-	else if (value[1] < 0)
-		value[0] = c_value;
 	else
 	{
-		value[0] = c_value;
-		value[1] = -1;
-		return (-1);
+		if (value[0] < 0)
+		{
+			rec->hit_shape = circle;
+			return (1);
+		}
+		else if (value[1] < 0)
+			value[0] = c_value;
+		else
+		{
+			value[0] = c_value;
+			value[1] = -1;
+			return (-1);
+		}
+		rec->hit_shape = circle;
 	}
 	return (0);
 }
 
-int	hit_circle(t_ray *ray, t_object *obj, double value[])
+int	hit_circle(t_ray *ray, t_object *obj, double value[], t_rec *rec)
 {
 	double	b_value;
 	double	t_value;
@@ -65,5 +69,5 @@ int	hit_circle(t_ray *ray, t_object *obj, double value[])
 		if (t_value != -1 && t_value < b_value)
 			b_value = t_value;
 	}
-	return (parse_value(b_value, value));
+	return (parse_value(b_value, value, rec));
 }

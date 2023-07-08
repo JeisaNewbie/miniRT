@@ -3,14 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   hit_objects.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhwang2 <jhwang2@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: jhwang2 <jhwang2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:44:45 by jeelee            #+#    #+#             */
-/*   Updated: 2023/07/04 15:08:07 by jhwang2          ###   ########.fr       */
+/*   Updated: 2023/07/06 18:11:57 by jhwang2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minirt.h"
+
+double	hit_objs(t_ray *ray, t_object *obj, t_rec *rec)
+{
+	int		value_num;
+	double	value[2];
+
+	value_num = 0;
+	value[0] = -1;
+	value[1] = -1;
+	if (obj->shape == sphere)
+		value_num = hit_sphere(ray, obj, value);
+	else if (obj->shape == plane)
+		value_num = hit_plane(ray, obj, value);
+	else if (obj->shape == cylinder)
+		value_num = hit_cylinder(ray, obj, value) + \
+			hit_circle(ray, obj, value, rec);
+	else if (obj->shape == cone)
+		value_num = hit_cone(ray, obj, value) + \
+			hit_circle(ray, obj, value, rec);
+	if (value[0] < 0)
+	{
+		if (value_num == 2 && value[1] >= 0)
+			return (value[1]);
+		return (-1);
+	}
+	return (value[0]);
+}
 
 int	is_front(t_camera *cam, t_object *obj, double t)
 {

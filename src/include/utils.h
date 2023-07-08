@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scene.h                                            :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jeelee <jeelee@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/11 14:19:46 by jhwang2           #+#    #+#             */
-/*   Updated: 2023/07/05 20:46:59 by jeelee           ###   ########.fr       */
+/*   Created: 2023/07/05 21:55:54 by jeelee            #+#    #+#             */
+/*   Updated: 2023/07/05 22:12:14 by jeelee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCENE_H
-# define SCENE_H
+#ifndef UTILS_H
+# define UTILS_H
+
 # include "./types.h"
 
-# define FOCAL_LENGTH 2
+u_int32_t	create_color(double r, double g, double b);
+u_int32_t	add_color_col(u_int32_t old_color, u_int32_t add_color);
+u_int32_t	add_color_val(u_int32_t old_color, double r, double g, double b);
+u_int32_t	mul_color(u_int32_t old_color, double value);
 
-void		init_origin_point(t_ray *ray, t_point center);
-void		init_dir(t_camera *cam, double u, double v);
-void		set_cposition(t_data *data, double ratio);
-void		init_screen(t_camera *camera, t_point u, t_point v, t_point w);
+double		max(double a, double b);
 
 #endif

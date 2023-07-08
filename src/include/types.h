@@ -6,7 +6,7 @@
 /*   By: jhwang2 <jhwang2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 21:28:57 by jeelee            #+#    #+#             */
-/*   Updated: 2023/07/05 17:32:12 by jhwang2          ###   ########.fr       */
+/*   Updated: 2023/07/06 16:04:18 by jhwang2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,11 @@ typedef struct s_mlx
 	int		endian;
 }	t_mlx;
 
-typedef struct s_ray //P(t) = A + tb; t_min(뷰포트 시작점)과 t_max고려
+typedef struct s_ray
 {
-	t_point	origin_point;//원점
-	t_point	dir;//b, 방향과 크기. t가 증가할수록 원점에서 거리가 더 먼 점을 나타냄
+	t_point	origin_point;
+	t_point	dir;
+	double	t;
 }	t_ray;
 
 typedef struct s_rot
