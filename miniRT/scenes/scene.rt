@@ -1,0 +1,19 @@
+# Scene file
+
+#	Lights
+#	[Type]	[Point]		[Ratio]										[Color]
+A 0.2 255,255,255 # Ambient
+L -10,1,0 0.7 # Light
+
+#	Camera
+#	[Type]	[Point]		[n_vector]		[FOV]
+C 0,10,35 0,-0.3,-1 70 # Camera
+
+#	Objects
+#	[Type]	[Point]		[n_vector]	[Diameter]	[Height]	[FOV]	[Color]
+cy -6,0,0 0,1,0 5 10 166,62,102 # Cylinder
+sp 0,0,0 5 66,132,202 # Sphere
+
+
+#	Plane
+pl 0,0,0 0,1,0 210,210,50 # Plane
